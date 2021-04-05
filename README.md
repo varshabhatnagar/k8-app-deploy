@@ -1,1 +1,1 @@
-# cn-app-deploy
+# app-deploy
