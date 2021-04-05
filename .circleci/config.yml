@@ -1,0 +1,40 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@6.15.3
+
+jobs:
+  Deploy-Helm:
+    description: Deploy Helloworld
+    docker:
+      - image: jshimko/kube-tools-aws
+    steps:
+      - checkout
+      - run:
+          name: Install Release
+          command: . helm-deploy.sh
+
+workflows:
+  version: 2.1
+  app-deploy:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          name: build and push image
+          context: cn-standard
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          no-output-timeout: 20m
+          path: Docker
+          region: AWS_DEFAULT_REGION
+          repo: cn-hello-world
+          skip-when-tags-exist: false
+          tag: "latest"
+      - approval_dev:
+          name: Approve Deploy
+          type: approval
+          requires:
+            - build and push image
+      - Deploy-Helm:
+          name: Deploy Dev
+          context: cn-standard
+          requires:
+            - Approve Deploy
