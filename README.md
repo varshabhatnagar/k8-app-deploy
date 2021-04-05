@@ -10,10 +10,11 @@ This project uses CircleCI pipeline to deploy Hello World PHP application onto E
 
 ## Setup:
 Clone this repository and set secrets in the CircleCI context. The project uses 4 secrets
-- **AWS_ACCESS_KEY_ID**
-- **AWS_DEFAULT_REGION**
-- **AWS_ECR_ACCOUNT_URL**
-- **AWS_SECRET_ACCESS_KEY**
+- AWS_ACCESS_KEY_ID
+- AWS_DEFAULT_REGION
+- AWS_ECR_ACCOUNT_URL
+- AWS_SECRET_ACCESS_KEY
+
 Context being used for this project is named as *cn-standard*.
 
 ## CircleCI pipeline has below stages:
